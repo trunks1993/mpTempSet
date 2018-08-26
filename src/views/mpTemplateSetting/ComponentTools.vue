@@ -379,6 +379,33 @@
             <el-radio v-model="tempData.autoAdd" :label="true">自动添加</el-radio>
           </template>
         </li>
+        <li style="flex-direction: column;" v-if="!tempData.autoAdd">
+          <div class="couponbox" v-for="item in tempData.couponList">
+            <div class="couponbox-main">
+              <div class="couponbox-main-left">
+                {{item.price}}元
+              </div>
+              <div class="couponbox-main-right">
+                <div class="couponbox-main-right-name">
+                  {{item.couponName}}
+                </div>
+                <div class="couponbox-main-right-date">
+                  {{item.expiryDate}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="formli" v-if="!tempData.autoAdd">
+          <div class="addmenu">
+            <div class="addmenu-add" @click="addcoupon">
+              <div class="addmenu-add-plus">
+                <img :src="require('@/assets/componetImg/plus.png')">
+                <span>添加优惠券</span>
+              </div>
+            </div>
+          </div>
+        </li>
         <li>
           <span class="title">样式</span>
           <div class="coupon">
@@ -394,6 +421,16 @@
         </li>
         <li class="explain">
           注：当页面无可显示的优惠券时，优惠券区域将隐藏
+        </li>
+      </ul>
+      <ul v-if="value.mainDataList.length > 0 && tempData && tempData.type === 11">
+        <li class="same__shop">
+          <div>
+            排序方式按距离由近到远
+          </div>
+          <div>
+            展示全部可服务的同城门店
+          </div>
         </li>
       </ul>
     </template>
@@ -470,6 +507,9 @@ export default {
     },
     addimg() {
       this.value.mainDataList[this.activeIndex].imgList.push({ title: '', link: '', imgUrl: '' })
+    },
+    addcoupon() {
+      this.dialogCouponVisible = true
     },
     changeStatus(type, index, arr) {
       if (type === 'moveTop' && index !== 0) {
@@ -614,6 +654,42 @@ export default {
           margin-top: 15px;
         }
       }
+      .couponbox {
+        padding: 14px 16px;
+        background: #F4F4F4;
+        width: 100%;
+        box-sizing: border-box;
+        &-main {
+          display: flex;
+          align-items: center;
+          border: 1px solid rgba(0,0,0,0.1);
+          padding: 10px 0;
+          &-left {
+            border-right: 1px solid rgba(0,0,0,0.1);
+            height: 100%;
+            text-align: right;
+            padding-right: 20px;
+            padding-left: 40px;
+
+          }
+          &-right {
+            padding-left: 15px;
+            &-name {
+              font-size: 12px;
+              line-height: 12px;
+            }
+            &-date {
+              margin-top: 5px;
+              font-size: 12px;
+              line-height: 12px;
+              color: #999999;
+            }
+          }
+        }
+      }
+      .couponbox:not(:first-child) {
+        margin-top: 20px;
+      }
     }
     .formli {
       display: block;
@@ -670,7 +746,6 @@ export default {
         margin-bottom: 17px;
       }
       .addmenu {
-        // height: 62px;
         padding: 7px 12px;
         background: rgba(244, 244, 244, 1);
         &-add {
@@ -706,6 +781,25 @@ export default {
       font-size:12px;
       color: #999999;
     }
+    .same__shop {
+      flex-direction: column;
+      align-items: baseline;
+      padding-left: 100px;
+      div {
+        position: relative;
+        &:before {
+          content: ' ';
+          display: block;
+          width: 8px;
+          height: 8px;
+          background: rgba(205,175,40,1);
+          border-radius: 50%;
+          position: absolute;
+          left: -12px;
+          top: 6px;
+        }
+      }
+    }
   }
   &-sub {
     margin: 0 14px;
@@ -724,6 +818,6 @@ export default {
   background: rgba(244, 244, 244, 1);
 }
 .coupon .el-radio + .el-radio {
-  margin-left: 15px;
+  margin-left: 9px;
 }
 </style>

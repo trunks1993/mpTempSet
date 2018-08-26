@@ -68,6 +68,7 @@
                 <TempLine v-else-if="item.type === 7" :class="{active: activeIndex === index}" :data="item" :index="index" @selectTemp="selectTemp" @startMove="startMove" :key="index"></TempLine>
                 <TempWlink v-else-if="item.type === 8" :class="{active: activeIndex === index}" :data="item" :index="index" @selectTemp="selectTemp" @startMove="startMove" :key="index"></TempWlink>
                 <TempCoupon v-else-if="item.type === 10" :class="{active: activeIndex === index}" :data="item" :index="index" @selectTemp="selectTemp" @startMove="startMove" :key="index"></TempCoupon>
+                <TempShop v-else-if="item.type === 11" :class="{active: activeIndex === index}" :data="item" :index="index" @selectTemp="selectTemp" @startMove="startMove" :key="index"></TempShop>
               </template>
             </span>
           </div>
@@ -105,6 +106,7 @@ import TempLine from './components/TempLine'
 import TempProduct from './components/TempProduct'
 import TempWlink from './components/TempWlink'
 import TempCoupon from './components/TempCoupon'
+import TempShop from './components/TempShop'
 
 import { moveSpace } from '@/utils'
 
@@ -119,7 +121,8 @@ export default {
     TempLine,
     TempProduct,
     TempWlink,
-    TempCoupon
+    TempCoupon,
+    TempShop
   },
   data() {
     return {
