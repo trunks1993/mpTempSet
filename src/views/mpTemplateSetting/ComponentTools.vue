@@ -434,7 +434,7 @@
         </li>
       </ul>
     </template>
-    <el-dialog title="选择优惠券" :visible.sync="dialogCouponVisible" width="50%" :before-close="handleClose">
+    <el-dialog title="选择优惠券" :visible.sync="dialogCouponVisible" width="50%">
       <div class="filter">
         <el-input type="text" placeholder="请输入优惠券名称" size="mini" style="width: 208px;"></el-input>
         <el-button size="mini" plain style="margin-left: 6px;">搜索</el-button>
@@ -451,6 +451,41 @@
       </el-pagination>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="closeDialogCoupon" size="mini">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="选择图片" class="imgdialog" :visible.sync="dialogImgVisible" width="1072px">
+      <div class="dialog-img">  
+        <div class="dialog-img-menu">
+          <ul>
+            <li>
+              <img :src="require('@/assets/componetImg/plus3.png')">
+              <span>添加</span>
+            </li>
+            <li>
+              <img :src="require('@/assets/componetImg/cmm.png')">
+              <span>重命名</span>
+            </li>
+            <li>
+              <img :src="require('@/assets/componetImg/del.png')">
+              <span>删除</span>
+            </li>
+          </ul>
+          <el-tree :data="data" @node-click="handleNodeClick"></el-tree>
+        </div>
+        <div class="dialog-img-listwrapper">
+          <div class="toolbar">
+            <el-button size="mini" type="primary">上传图片</el-button>
+            <span>
+              <el-button size="mini">移动图片到</el-button>
+              <el-button size="mini">移动分类图片到</el-button>
+              <el-button size="mini" type="text">删除所选图片</el-button>
+            </span>
+            <span>
+              <el-input type="text" placeholder="请输入优惠券名称" size="mini" style="width: 166px;"></el-input>
+              <el-button size="mini" plain style="margin-left: 6px;">搜索</el-button>
+            </span>
+          </div>
+        </div>
       </div>
     </el-dialog>
   </div>
@@ -483,6 +518,7 @@ export default {
       ncmd: require('@/assets/componetImg/ncmd.png'),
       ncc: require('@/assets/componetImg/ncc.png'),
       dialogCouponVisible: false,
+      dialogImgVisible: true,
       CouponList: [
         {id: 1,couponName: '测试测试优惠券名字啊啊啊', price: 17, limit: '1人/张', stock: 20, expiryDate: '2018-07-02 至 2018-08-02'},
         {id: 2,couponName: '8月平台主动发放劵', price: 17, limit: '1人/张', stock: 20, expiryDate: '2018-07-02 至 2018-08-02'},
@@ -493,7 +529,17 @@ export default {
         current: 1,
         size: 8
       },
-      total: 3
+      total: 3,
+      data: [{
+        label: '我的上传（10）',
+        children: [{
+          label: '二级 1-1'
+        },{
+          label: '二级 1-1'
+        }]
+      }, {
+        label: '系统图标（100）'
+      }]
     }
   },
   computed: {
@@ -510,6 +556,12 @@ export default {
     },
     addcoupon() {
       this.dialogCouponVisible = true
+    },
+    hover() {
+
+    },
+    handleNodeClick(data) {
+      console.log(data);
     },
     changeStatus(type, index, arr) {
       if (type === 'moveTop' && index !== 0) {
@@ -812,8 +864,41 @@ export default {
   text-align: center;
   padding-bottom: 25px;
 }
+.dialog-img {
+  height: 685px;
+  display: flex;
+  ul {
+    display: flex;
+    justify-content: space-around;
+    border: 1px dashed rgba(0,0,0,0.1);
+    -webkit-margin-before: 7px;
+    -webkit-margin-after: 7px;
+    -webkit-margin-start: 7px;
+    -webkit-margin-end: 7px;
+    li {
+      margin: 17px 0;
+      cursor: pointer;
+      span {
+        margin-left: 4px;
+        font-size: 12px;
+      }
+    }
+  }
+  &-menu {
+    width: 20%;
+    border-right: 1px solid rgba(0,0,0,0.1);
+  }
+  &-listwrapper {
+    width: 80%;
+    .toolbar {
+      justify-content: space-between;
+      display: flex;
+      padding: 15px 30px;
+    }
+  }
+}
 </style>
-<style>
+<style lang="scss">
 .formBox-right .el-input__inner {
   background: rgba(244, 244, 244, 1);
 }
