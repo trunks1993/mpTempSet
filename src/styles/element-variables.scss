@@ -24,6 +24,12 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 }
 .el-dialog__body {
 	padding-top: 25px;
+  .el-checkbox__label {
+    display: none;
+  }
+  .el-radio__label {
+    display: none;
+  }
 }
 .imgdialog {
   .el-dialog__body {
@@ -32,4 +38,48 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 }
 .el-tree-node__expand-icon:before {
 	content: ' ';
+}
+// .product-wrapper-item .el-checkbox__label {
+//   display: none;
+// }
+// .product-wrapper-item .el-radio__label, .el-checkbox__label {
+//   display: none;
+// }
+.colorpick .el-color-picker {
+  height: 20px;
+}
+.colorpick .el-color-picker__trigger {
+  height: 20px;
+  width: 36px;
+  padding: 3px;
+}
+// .product-tip-inputradio .el-radio__label {
+//   display: none;
+// }
+// .activity-wrapper .el-radio__label {
+//   display: none;
+// }
+// .coupon-box .el-radio__label {
+//   display: none;
+// }
+.product-tip-inputradio {
+  .el-input__inner {
+    padding: 0;
+    background-color: #F2F2F2;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+}
+.activity-filter {
+  .el-radio + .el-radio {
+    margin-left: 15px;
+  }
+  .el-radio__label {
+    padding-left: 5px;
+  }
+}
+.el-color-picker__icon {
+  display: none;
 }

@@ -4,8 +4,8 @@
       <div class="coupon-single" v-if="data.couponList.length === 1">
         <div class="coupon-single-price">{{item.price }}</div>
         <div class="coupon-single-content">
-          <div>{{item.couponName }}</div>
-          <div>{{item.expiryDate }}</div>
+          <div>{{item.title }}</div>
+          <div>{{item.startTime }} 至 {{item.endTime }}</div>
         </div>
         <div class="coupon-single-btn">立即领取</div>
       </div>
@@ -14,7 +14,7 @@
           <div class="coupon-double-wrapper-content">
             <div class="coupon-double-wrapper-content-priceandname">
               <span>{{item.price }}</span>
-              <span>{{item.couponName }}</span>
+              <span>{{item.title }}</span>
             </div>
           </div>
           <div class="coupon-double-wrapper-btn">
@@ -27,7 +27,7 @@
           <div class="coupon-more-wrapper-content">
             <div class="coupon-more-wrapper-content-priceandname">
               <span>{{item.price }}</span>
-              <span>{{item.couponName }}</span>
+              <span>{{item.title }}</span>
             </div>
           </div>
           <div class="coupon-more-wrapper-btn">

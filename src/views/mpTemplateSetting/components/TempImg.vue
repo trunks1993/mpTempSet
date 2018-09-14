@@ -12,7 +12,7 @@
       </div>
       <div :class="{item_1: data.fixedCssType === 1, item_2: data.fixedCssType === 2, item_3: data.fixedCssType === 3}" v-for="item in data.imgList" v-if="item.imgUrl">
         <div class="title">{{item.title }}</div>
-        <img width="100%" style="vertical-align: middle;" :src="item.imgUrl">
+        <img width="100%" style="vertical-align: middle;" :src="item.imgUrl || require('@/assets/componetImg/nomenu1.png')">
       </div>
     </div>
   </div>

@@ -4,10 +4,10 @@
       <div class="back">
         <img :src="require('@/assets/images/fh.png')">
       </div>
-      <span class="title">商城首页</span>
+      <span class="title">页面编辑</span>
       <div class="btnBox">
-        <button class="btnBox-btn1">上架</button>
-        <button class="btnBox-btn2">保存草稿</button>
+        <button class="btnBox-btn1">启用</button>
+        <button class="btnBox-btn2" @click="save">保存</button>
         <button class="btnBox-btn3">预览</button>
       </div>
     </header>
@@ -49,11 +49,11 @@
       </div>
       <div class="mp-container-main-phoneWrapper" id="mp-container-main-phoneWrapper">
         <div class="phoneBox">
-          <div :style="`height: 57px;background:url(${require('@/assets/images/phonehead.jpg')});text-align: center;line-height: 73px;`">
-            友数商城
+          <div :style="`height: 57px;background:url(${require('@/assets/images/phonehead.jpg')});text-align: center;line-height: 73px;`" :class="{active: activeIndex === -1}" @click="activeIndex = -1" id="tools_header">
+            {{tempData.pageName || '友数商城'}}
           </div>
           <!-- 可以定义固定的头部 -->
-          <div id="tools_header" v-if="tempData.headerData.visible" style="height: 30px;background: #fff;" :class="{active: activeIndex === -1}" @click="selectTemp(-1)"></div>
+          <!-- <div id="tools_header" v-if="tempData.headerData.visible" style="height: 30px;background: #fff;" :class="{active: activeIndex === -1}" @click="selectTemp(-1)"></div> -->
           <!-- 主要模板定义区域 -->
           <div id="phoneScreen" ref="phoneScreen" class="phoneBox-main">
             <span id="test">
@@ -67,6 +67,7 @@
                 <TempEditor v-else-if="item.type === 6" :class="{active: activeIndex === index}" :data="item" :index="index" @selectTemp="selectTemp" @startMove="startMove" :key="index"></TempEditor>
                 <TempLine v-else-if="item.type === 7" :class="{active: activeIndex === index}" :data="item" :index="index" @selectTemp="selectTemp" @startMove="startMove" :key="index"></TempLine>
                 <TempWlink v-else-if="item.type === 8" :class="{active: activeIndex === index}" :data="item" :index="index" @selectTemp="selectTemp" @startMove="startMove" :key="index"></TempWlink>
+                <TempFixedPrice v-else-if="item.type === 9" :class="{active: activeIndex === index}" :data="item" :index="index" @selectTemp="selectTemp" @startMove="startMove" :key="index"></TempFixedPrice>
                 <TempCoupon v-else-if="item.type === 10" :class="{active: activeIndex === index}" :data="item" :index="index" @selectTemp="selectTemp" @startMove="startMove" :key="index"></TempCoupon>
                 <TempShop v-else-if="item.type === 11" :class="{active: activeIndex === index}" :data="item" :index="index" @selectTemp="selectTemp" @startMove="startMove" :key="index"></TempShop>
               </template>
@@ -76,7 +77,7 @@
           <div id="tools_footer" v-if="tempData.footerData.visible" style="height: 46px; border-top: 1px solid rgba(0,0,0,0.1); background: #fff;" :class="{active: activeIndex === -2}" @click="selectTemp(-2)">
           </div>
           <div class="tempTools" id="tempTools" :style="tempData.headerData.visible ? 'top: 57px' : 'top: 0'" v-show="!isNaN(activeIndex)">
-            <div class="tempTools-left">
+            <div class="tempTools-left" v-if="activeIndex!== -1">
               <div @click="showRightTools = !showRightTools"><img :src="require('@/assets/images/edit.png')"></div>
               <div @click="moveTop"><img :src="require('@/assets/images/mtop.png')"></div>
               <div @click="moveDown"><img :src="require('@/assets/images/mdown.png')"></div>
@@ -84,7 +85,8 @@
             </div>
             <div class="tempTools-right" v-show="showRightTools">
               <div class="tempTools-right-header">
-                <span>设置</span>
+                <span v-if="activeIndex >= 0">{{toolTitle }}设置</span>
+                <span v-else>页面设置</span>
                 <img @click="showRightTools = false" :src="require('@/assets/images/cls.png')">
               </div>
               <ComponentTools v-model="tempData" :activeIndex="activeIndex"></ComponentTools>
@@ -104,11 +106,13 @@ import TempImg from './components/TempImg'
 import TempEditor from './components/TempEditor'
 import TempLine from './components/TempLine'
 import TempProduct from './components/TempProduct'
+import TempFixedPrice from './components/TempFixedPrice'
 import TempWlink from './components/TempWlink'
 import TempCoupon from './components/TempCoupon'
 import TempShop from './components/TempShop'
 
 import { moveSpace } from '@/utils'
+import { addTemplate } from '@/api'
 
 export default {
   components: {
@@ -120,6 +124,7 @@ export default {
     TempEditor,
     TempLine,
     TempProduct,
+    TempFixedPrice,
     TempWlink,
     TempCoupon,
     TempShop
@@ -135,7 +140,8 @@ export default {
           { type: 5, title: '图片', img: require('@/assets/images/tp.png'), aimg: require('@/assets/images/atp.png') },
           { type: 6, title: '富文本', img: require('@/assets/images/fwb.png'), aimg: require('@/assets/images/afwb.png') },
           { type: 7, title: '分割线', img: require('@/assets/images/fgx.png'), aimg: require('@/assets/images/afgx.png') },
-          { type: 8, title: '文字链接', img: require('@/assets/images/wzlj.png'), aimg: require('@/assets/images/awzlj.png') }
+          { type: 8, title: '文字链接', img: require('@/assets/images/wzlj.png'), aimg: require('@/assets/images/awzlj.png') },
+          { type: 9, title: '一口价', img: require('@/assets/images/ykj.png'), aimg: require('@/assets/images/aykj.png') }
         ],
         marketTools: [{ type: 10, title: '优惠券', img: require('@/assets/images/yhq.png'), aimg: require('@/assets/images/ayhq.png') }],
         otherTools: [{ type: 11, title: '同城门店列表', img: require('@/assets/images/tcmd.png'), aimg: require('@/assets/images/atcmd.png') }]
@@ -147,7 +153,10 @@ export default {
         mainDataList: [],
         footerData: {
           visible: false
-        }
+        },
+        tags: '',
+        pageName: '',
+        desc: ''
       },
       currentTemplate: '',
       offLX: 0,
@@ -161,13 +170,34 @@ export default {
   },
   watch: {
     activeIndex(val, oldVal) {
-      const tempDoms = [...document.getElementById('test').children]
-      if (val !== '' && val >= 0) {
-        document.getElementById('tempTools').style.top = tempDoms[val].offsetTop + 57 + (this.tempData.headerData.visible ? 30 : 0) + 'px'
-      } else if (val === -1 && this.tempData.headerData.visible) {
-        document.getElementById('tempTools').style.top = document.getElementById('tools_header').offsetTop + 'px'
-      } else if (val === -2 && this.tempData.footerData.visible) {
-        document.getElementById('tempTools').style.top = document.getElementById('tools_footer').offsetTop + 'px'
+      this.$nextTick(() => {
+        const tempDoms = [...document.getElementById('test').children]
+        if (val !== '' && val >= 0) {
+          document.getElementById('tempTools').style.top = tempDoms[val].offsetTop + 57 + (this.tempData.headerData.visible ? 30 : 0) + 'px'
+        } else if (val === -1) {
+          document.getElementById('tempTools').style.top = document.getElementById('tools_header').offsetTop + 'px'
+          this.showRightTools = true
+        } else if (val === -2 && this.tempData.footerData.visible) {
+          document.getElementById('tempTools').style.top = document.getElementById('tools_footer').offsetTop + 'px'
+        }
+      })
+    }
+  },
+  computed: {
+    toolTitle() {
+      let str = ''
+      const type = this.tempData.mainDataList[this.activeIndex].type
+      const arr1 = this.toolList.baseTools
+      const arr2 = this.toolList.marketTools
+      const arr3 = this.toolList.otherTools
+      for(const item of arr1) {
+        if (item.type === type) return str = item.title
+      }
+      for(const item of arr2) {
+        if (item.type === type) return str = item.title
+      }
+      for(const item of arr3) {
+        if (item.type === type) return str = item.title
       }
     }
   },
@@ -356,12 +386,11 @@ export default {
         // es6解构赋值
         [this.tempData.mainDataList[this.activeIndex], this.tempData.mainDataList[this.activeIndex - 1]] = [this.tempData.mainDataList[this.activeIndex - 1], this.tempData.mainDataList[this.activeIndex]]
         this.activeIndex--
-      } else if (this.activeIndex === 0 && this.tempData.headerData.visible) {
+      } else if (this.activeIndex === 0) {
         this.activeIndex = -1
       } else if (this.activeIndex === -2) {
         if (this.tempData.mainDataList.length > 0) this.activeIndex = this.tempData.mainDataList.length - 1
         else this.activeIndex = -1
-        console.log(this.activeIndex)
       }
     },
     moveDown() {
@@ -405,7 +434,7 @@ export default {
             isTopTitle: false,
             position: 1,
             slide: false,
-            menuList: [{title: '', subTitle: '', link: '', iconUrl: ''},{title: '', subTitle: '', link: '', iconUrl: ''},{title: '', subTitle: '', link: '', iconUrl: ''},{title: '', subTitle: '', link: '', iconUrl: ''}]
+            menuList: [{title: '', subTitle: '', link: '', imgUrl: ''},{title: '', subTitle: '', link: '', imgUrl: ''},{title: '', subTitle: '', link: '', imgUrl: ''},{title: '', subTitle: '', link: '', imgUrl: ''}]
           }
           break
         case 3:
@@ -418,11 +447,9 @@ export default {
             },
             title: '',
             subTitle: '',
-            link: {
-              visible: true,
-              url: '',
-              note: ''
-            }
+            linkVisible: true,
+            linkContent: '',
+            link: ''
           }
           break
         case 4:
@@ -435,7 +462,8 @@ export default {
               background: '#F84B3F'
             },
             logoType: 1,
-            productList: [{imgUrl: require('@/assets/test2.png'), productName: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试', price: 40}, {imgUrl: require('@/assets/test2.png'), productName: '测试测试测试测试测试测试测试测试', price: 40},{imgUrl: require('@/assets/test2.png'), productName: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试', price: 40},{imgUrl: require('@/assets/test2.png'), productName: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试', price: 40}]
+            customLogo: '',
+            productList: []
           }
           break
         case 5:
@@ -443,7 +471,7 @@ export default {
             type: type,
             fixedCssType: 1,
             isFill: true,
-            imgList: [{title: '测试一下', link: '', imgUrl: require('@/assets/test.png')}, {title: '测试一下', link: '', imgUrl: require('@/assets/test.png')}]
+            imgList: [{title: '测试一下', link: '', imgUrl: ''}]
           }
           break
         case 6:
@@ -483,7 +511,19 @@ export default {
           break
         case 9:
           modelObj = {
-            type: type
+            type: type,
+            activity: '',
+            fixedCssType: 2,
+            productCssList: [],
+            button: {
+              type: 1,
+              background: '#F84B3F'
+            },
+            logo: {
+              type: 1,
+              background: '#F84B3F'
+            },
+            productList: []
           }
           break
         case 10:
@@ -502,6 +542,11 @@ export default {
           break
       }
       return modelObj
+    },
+    save() {
+      addTemplate(this.tempData).then(res => {
+
+      })
     }
   }
 }
@@ -535,7 +580,6 @@ export default {
       height: 90%;
       display: inline-block;
       width: 131px;
-      border-bottom: 1px solid rgba(205, 175, 40, 1);
     }
     .btnBox {
       position: absolute;

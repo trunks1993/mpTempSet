@@ -1,6 +1,6 @@
 <template>
   <div class="coupon-container" @click="selectTemp" @mousedown="startMove($event)">
-  	<img width="100%" :src="require('@/assets/test3.png')">
+  	<img width="100%" :src="require('@/assets/test3.jpg')">
   </div>
 </template>
 <script>

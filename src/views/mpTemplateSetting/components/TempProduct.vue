@@ -4,14 +4,16 @@
       <div class="cssType_item" v-for="item in data.productList">
         <div class="tip" v-if="data.productCssList.includes(4)">
           <img :src="require('@/assets/componetImg/biao.png')">
-          <span>{{data.logoType === 1 ? '新品' : '热卖' }}</span>
+          <span>{{data.logoType === 1 ? '新品' : data.logoType === 2 ? '热卖' : data.customLogo }}</span>
         </div>
-        <img width="100%" :src="item.imgUrl">
+        <div class="imgbox">
+          <img :src="item.imagePath">
+        </div>
         <div class="title">
-          {{item.productName}}
+          {{item.ProductName}}
         </div>
         <div class="priceBox">
-          <span class="price">￥{{item.price}}</span>
+          <span class="price">￥{{item.MinSalePrice}}</span>
           <div class="shopcar" v-if="data.productCssList.includes(3)" :style="'background:' + data.button.background">
             <img :src="data.button.type === 1 ? require('@/assets/images/shopcar.png') : require('@/assets/componetImg/plus2.png')"> 加入购物车
           </div>
@@ -22,14 +24,16 @@
       <div class="cssType_item" v-for="item in data.productList">
         <div class="tip" v-if="data.productCssList.includes(4)">
           <img :src="require('@/assets/componetImg/biao.png')">
-          <span>{{data.logoType === 1 ? '新品' : '热卖' }}</span>
+          <span>{{data.logoType === 1 ? '新品' : data.logoType === 2 ? '热卖' : data.customLogo }}</span>
         </div>
-        <img width="100%" :src="item.imgUrl">
+        <div class="imgbox">
+          <img :src="item.imagePath">
+        </div>
         <div class="title">
-          {{item.productName}}
+          {{item.ProductName}}
         </div>
         <div class="priceBox">
-          <span class="price">￥{{item.price}}</span>
+          <span class="price">￥{{item.MinSalePrice}}</span>
           <div class="shopcar" v-if="data.productCssList.includes(3)" :style="'background:' + data.button.background">
             <img :src="data.button.type === 1 ? require('@/assets/images/shopcar.png') : require('@/assets/componetImg/plus2.png')">
           </div>
@@ -40,14 +44,16 @@
       <div class="cssType_item" v-for="item in data.productList">
         <div class="tip" v-if="data.productCssList.includes(4)">
           <img :src="require('@/assets/componetImg/biao.png')">
-          <span>{{data.logoType === 1 ? '新品' : '热卖' }}</span>
+          <span>{{data.logoType === 1 ? '新品' : data.logoType === 2 ? '热卖' : data.customLogo }}</span>
         </div>
-        <img width="100%" :src="item.imgUrl">
+        <div class="imgbox">
+          <img :src="item.imagePath">
+        </div>
         <div class="title">
-          {{item.productName}}
+          {{item.ProductName}}
         </div>
         <div class="priceBox">
-          <span class="price">￥{{item.price}}</span>
+          <span class="price">￥{{item.MinSalePrice}}</span>
           <div class="shopcar" v-if="data.productCssList.includes(3)" :style="'background:' + data.button.background">
             <img :src="data.button.type === 1 ? require('@/assets/images/shopcar.png') : require('@/assets/componetImg/plus2.png')">
           </div>
@@ -58,17 +64,19 @@
     </div>
     <div class="cssType_5" v-if="data.fixedCssType === 5">
       <div class="cssType_item" v-for="item in data.productList">
-        <img width="78px" height="76px" :src="item.imgUrl">
+        <div class="imgbox">
+          <img :src="item.imagePath">
+        </div>
         <div class="tip" v-if="data.productCssList.includes(4)">
           <img :src="require('@/assets/componetImg/biao.png')">
-          <span>{{data.logoType === 1 ? '新品' : '热卖' }}</span>
+          <span>{{data.logoType === 1 ? '新品' : data.logoType === 2 ? '热卖' : data.customLogo }}</span>
         </div>
         <div class="right">
           <div class="title">
-            {{item.productName}}
+            {{item.ProductName}}
           </div>
           <div class="priceBox">
-            <span class="price">￥{{item.price}}</span>
+            <span class="price">￥{{item.MinSalePrice}}</span>
             <div class="shopcar" v-if="data.productCssList.includes(3)" :style="'background:' + data.button.background">
               <img :src="data.button.type === 1 ? require('@/assets/images/shopcar.png') : require('@/assets/componetImg/plus2.png')">
             </div>
@@ -76,18 +84,20 @@
         </div>
       </div>
     </div>
-    <div class="cssType_3" v-if="data.fixedCssType === 6" style="overflow: hidden;height: 195px;">
+    <div class="cssType_3" v-if="data.fixedCssType === 6" style="overflow: hidden;height: 190px;">
       <div class="cssType_item" v-for="item in data.productList">
         <div class="tip" v-if="data.productCssList.includes(4)">
           <img :src="require('@/assets/componetImg/biao.png')">
-          <span>{{data.logoType === 1 ? '新品' : '热卖' }}</span>
+          <span>{{data.logoType === 1 ? '新品' : data.logoType === 2 ? '热卖' : data.customLogo }}</span>
         </div>
-        <img width="100%" :src="item.imgUrl">
+        <div class="imgbox">
+          <img :src="item.imagePath">
+        </div>
         <div class="title">
-          {{item.productName}}
+          {{item.ProductName}}
         </div>
         <div class="priceBox">
-          <span class="price">￥{{item.price}}</span>
+          <span class="price">￥{{item.MinSalePrice}}</span>
           <div class="shopcar" v-if="data.productCssList.includes(3)" :style="'background:' + data.button.background">
             <img :src="data.button.type === 1 ? require('@/assets/images/shopcar.png') : require('@/assets/componetImg/plus2.png')">
           </div>
@@ -114,6 +124,12 @@ export default {
 
 </script>
 <style lang="scss">
+.no-flex-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .cssType_1 {
   padding: 8px;
   .cssType_item {
@@ -136,6 +152,15 @@ export default {
         font-size: 16px;
         color: #fff;
         text-align: center;
+      }
+    }
+    .imgbox {
+      height: 315px;
+      position: relative;
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        @extend .no-flex-center;
       }
     }
     .title {
@@ -202,6 +227,15 @@ export default {
         text-align: center;
       }
     }
+    .imgbox {
+      height: 150px;
+      position: relative;
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        @extend .no-flex-center;
+      }
+    }
     .title {
       font-size: 14px;
       padding: 0 5px;
@@ -266,6 +300,15 @@ export default {
         text-align: center;
       }
     }
+    .imgbox {
+      height: 110px;
+      position: relative;
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        @extend .no-flex-center;
+      }
+    }
     .title {
       font-size: 14px;
       padding: 0 5px;
@@ -323,6 +366,16 @@ export default {
         font-size: 12px;
         color: #fff;
         text-align: center;
+      }
+    }
+    .imgbox {
+      width: 78px;
+      height: 76px;
+      position: relative;
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        @extend .no-flex-center;
       }
     }
     .right {

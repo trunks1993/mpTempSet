@@ -5,14 +5,14 @@
         <div :class="{line_01: data.fixedCssType === 2, line_02: data.fixedCssType === 1}" :style="{background: data.dynamicCss.background}"></div>
         {{data.title}}
       </div>
-      <div class="title-container-box-urlbox" v-if="data.link.visible">
-        {{data.link.note }}
+      <div class="title-container-box-urlbox" v-if="data.linkVisible">
+        {{data.linkContent }}
         <img :src="require('@/assets/componetImg/arrow.png')">
       </div>
     </div>
     <p class="title-container-subox" :class="{center: data.position === 2, right: data.position === 3}" :style="data.fixedCssType === 2 || '-webkit-margin-before: 9px;'">
       {{data.subTitle}}
-      <span v-if="data.position === 3 && data.link.visible" style="opacity: 0;padding-right: 10px;font-size:12px;">{{data.link.note }}</span>
+      <span v-if="data.position === 3 && data.linkVisible" style="opacity: 0;padding-right: 10px;font-size:12px;">{{data.linkContent }}</span>
     </p>
   </div>
 </template>

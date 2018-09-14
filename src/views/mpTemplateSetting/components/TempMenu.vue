@@ -2,7 +2,9 @@
   <div class="menu-container" @click="selectTemp" @mousedown="startMove($event)">
     <ul class="ul_01" v-if="data.isImg && !data.isTopTitle" :style="data.slide ? 'overflow: hidden; white-space: nowrap;' : ''">
       <li v-for="(item, index) in data.menuList" :style="'width: calc(100% /' + (data.menuList.length > 5 ? 5 : data.menuList.length) + ')'">
-        <img :src="item.iconUrl || require('@/assets/componetImg/nomenu.png')">
+        <div class="img-wrapper">
+          <img :src="item.imgUrl || require('@/assets/componetImg/nomenu.png')">
+        </div>
         <h4>{{item.title || '分类' + (index + 1) }}</h4>
       </li>
     </ul>
@@ -10,7 +12,9 @@
       <li v-for="(item, index) in data.menuList" :style="'width: calc(100% /' + (data.menuList.length > 3 ? 3 : data.menuList.length) + ')'">
         <h4>{{item.title || '分类标题' + (index + 1) }}</h4>
         <h5>{{item.subTitle || '副标题' + (index + 1) }}</h5>
-        <img :src="item.iconUrl || require('@/assets/componetImg/nomenu1.png')">
+        <div class="img-wrapper">
+          <img :src="item.imgUrl || require('@/assets/componetImg/nomenu1.png')">
+        </div>
         <div class="line"></div>
       </li>
     </ul>
@@ -34,6 +38,12 @@ export default {
 
 </script>
 <style lang="scss" scoped>
+.no-flex-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .menu-container {
   position: relative;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -49,6 +59,16 @@ export default {
       padding-top: 26px;
       text-align: center;
       display: inline-block;
+      .img-wrapper {
+        width: 44px;
+        height: 44px;
+        display: inline-block;
+        position: relative;
+        img {
+          max-width: 100%;
+          @extend .no-flex-center;
+        }
+      }
       h4 {
         font-size: 13px;
         color: #333333;
@@ -69,6 +89,16 @@ export default {
       text-align: center;
       position: relative;
       display: inline-block;
+      .img-wrapper {
+        width: 86px;
+        height: 86px;
+        display: inline-block;
+        position: relative;
+        img {
+          max-width: 100%;
+          @extend .no-flex-center;
+        }
+      }
       h4 {
         font-size: 14px;
         line-height: 14px;
